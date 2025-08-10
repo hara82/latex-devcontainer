@@ -59,8 +59,19 @@ if [[ -z "$OUTTEX" ]]; then
   read -r -p "Output .tex filename [${default_out}]: " OUTTEX || true
   OUTTEX="${OUTTEX:-$default_out}"
 fi
+
 [[ "$OUTTEX" == *.tex ]] || { echo "[abort] Output filename must end with .tex"; exit 3; }
-[[ ! -e "$OUTTEX" ]] || { echo "[abort] $OUTTEX already exists. Remove it or choose another name."; exit 3; }
+
+if [[ -e "$OUTTEX" ]]; then
+  while :; do
+    read -r -p "[warn] $OUTTEX already exists. Overwrite? [y/N]: " ans || { echo "[abort]"; exit 3; }
+    case "$ans" in
+      [Yy]|[Yy][Ee][Ss]) break ;;
+      [Nn]|[Nn][Oo]|"")  echo "[abort] Choose another name with -o."; exit 3 ;;
+      *)                 echo "Please answer 'y' or 'n'." ;;
+    esac
+  done
+fi
 
 # --- 3) REV (argument or interactive picker) ---
 REV="${1:-}"
