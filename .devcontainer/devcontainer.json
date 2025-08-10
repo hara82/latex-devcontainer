@@ -1,0 +1,49 @@
+{
+  // For details on the devcontainer.json schema, see:
+  // https://containers.dev/implementors/json_reference/
+  "name": "Latex Dev Container",
+  "image": "texlive/texlive",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "James-Yu.latex-workshop",
+        "GitHub.copilot"
+      ],
+      "settings": {
+        "[tex]": {
+          "editor.indentSize": 2
+        },
+        // Details of formattings can be found at:
+        // https://github.com/James-Yu/LaTeX-Workshop/wiki/Format#latex-workshopformattinglatexindentargs
+        "latex-workshop.formatting.latex": "latexindent",
+        "latex-workshop.formatting.latexindent.args": [
+          "-c",
+          "%DIR%/",
+          "%TMPFILE%",
+          "-y=defaultIndent: '%INDENT%'"
+        ],
+        "latex-workshop.linting.chktex.enabled": true,
+        "latex-workshop.synctex.afterBuild.enabled": true,
+        "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+        "latex-workshop.latex.outDir": "%DIR%/out" // For synctex.
+      }
+    }
+  },
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      // https://github.com/devcontainers/features/tree/main/src/common-utils
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "username": "automatic",
+      "userUid": "automatic",
+      "userGid": "automatic"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    // https://github.com/devcontainers-extra/features
+    "ghcr.io/devcontainers-extra/features/zsh-plugins": {
+      "plugins": "zsh-autosuggestions zsh-syntax-highlighting",
+      "omzPlugins": "https://github.com/zsh-users/zsh-autosuggestions.git https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    }
+  }
+}
